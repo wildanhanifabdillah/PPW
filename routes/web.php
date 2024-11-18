@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginRegisterController;
-use App\Http\Controllers\BukuController;
+use App\Http\Controllers\Api\BookApiController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\Auth\LoginRegisterController;
 
 Route::get('/', function() {
     return view('welcome');
