@@ -51,6 +51,7 @@
                                 <option value="" disabled selected>Pilih Level</option>
                                 <option value="admin">Admin</option>
                                 <option value="user">User</option>
+                                <option value="internal_reviewer">Internal Reviewer</option>
                             </select>
                         </div>
                     </div>

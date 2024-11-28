@@ -19,6 +19,47 @@
             <button class="btn btn-outline-secondary" type="submit">Search</button>
         </div>
     </form>
+    <form method="get" id="tagForm">
+        @csrf
+        <div class="input-group mb-3" style="float: right; width: 30%; margin-top: 10px;">
+            <input type="text" name="tag" class="form-control" placeholder="Cari berdasarkan tag..." aria-label="Search by Tag" id="tag">
+            <button class="btn btn-outline-secondary" type="submit">Search by Tag</button>
+        </div>
+    </form>
+    <script>
+        // Menambahkan tag yang diketikkan ke dalam URL
+        document.getElementById('tagForm').addEventListener('submit', function (event) {
+            const tagValue = document.getElementById('tag').value.trim(); // Ambil nilai tag
+            if (tagValue) {
+                this.action = '/tag/' + tagValue; // Ganti action form dengan URL yang sesuai
+            } else {
+                event.preventDefault(); // Jika tag kosong, jangan submit form
+                alert('Silakan masukkan tag yang valid');
+            }
+        });
+    </script>
+    
+    <form method="get" id="reviewerForm">
+        @csrf
+        <div class="input-group mb-3" style="float: right; width: 30%; margin-top: 10px;">
+            <input type="text" name="reviewer" class="form-control" placeholder="Cari berdasarkan reviewer..." aria-label="Search by Reviewer" id="reviewer">
+            <button class="btn btn-outline-secondary" type="submit">Search by Reviewer</button>
+        </div>
+    </form>
+    
+    <script>
+        document.getElementById('reviewerForm').addEventListener('submit', function (event) {
+            const reviewerValue = document.getElementById('reviewer').value.trim();
+            if (reviewerValue) {
+                this.action = '/reviewer/' + reviewerValue;
+            } else {
+                event.preventDefault();
+                alert('Silakan masukkan nama reviewer yang valid');
+            }
+        });
+    </script>
+    
+    
     <table class="table table-secondary table-hover table-striped">
         <thead>
             <tr>
@@ -71,6 +112,9 @@
     <div>{{$data_buku->links('pagination::bootstrap-5')}}</div>
     @if (Auth::user()->level=='admin')
         <a href="{{route('buku.create')}}" class="btn btn-primary float-end">Tambah Buku</a>
+    @endif
+    @if (Auth::user()->level=='admin'|| Auth::user()->level == 'internal_reviewer')
+        <a href="{{route('reviews.create')}}" class="btn btn-primary float-end">Buat Review</a>
     @endif
 </body>
 @endsection

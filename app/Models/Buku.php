@@ -10,7 +10,7 @@ class Buku extends Model
 {
     use HasFactory;
     protected $table = 'books';
-    protected $fillable = ['id', 'judul', 'penulis', 'harga', 'tgl_terbit','created_at','update_at','update_at','filename','filepath'];
+    protected $fillable = ['id', 'judul', 'penulis', 'harga', 'tgl_terbit','created_at','update_at','filename','filepath'];
     protected $casts = [
         'tgl_terbit'=>'date'
     ];
@@ -18,5 +18,8 @@ class Buku extends Model
 
     public function galleries():HasMany{
         return $this->hasMany(Gallery::class, 'books_id','id');
+    }
+    public function review():HasMany{
+        return $this->hasMany(Review::class, 'book_id','id');
     }
 }

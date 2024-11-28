@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\BookApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Api\BookApiController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 
 Route::get('/', function() {
@@ -16,6 +17,8 @@ Route::delete('/buku/{id}', [BukuController::class,'destroy'])->name('buku.destr
 Route::get('/buku/{id}/edit',[BukuController::class,'edit'])->name('buku.edit');
 Route::put('/buku/{id}',[BukuController::class,'update'])->name('buku.update');
 Route::get('/buku/search',[BukuController::class, 'search'])->name('buku.search');
+Route::get('/reviewer/{username}', [ReviewController::class, 'byReviewer'])->name('reviewer.show');
+Route::get('/tag/{tag}', [ReviewController::class, 'byTag'])->name('tag.show');
 
 Route::controller(LoginRegisterController::class)->group(function() {
     Route::get('/register', 'register')->name('register');
@@ -26,3 +29,8 @@ Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/logout', 'logout')->name('logout');
 });
 Route::delete('/buku/{buku}/gallery/{gallery}', [BukuController::class, 'deleteGalleryImage'])->name('buku.deleteGalleryImage');
+
+Route::middleware(['auth', 'reviewer'])->group(function () {
+    Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
